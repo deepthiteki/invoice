@@ -1,0 +1,30 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var invoice_1 = __importDefault(require("./invoice"));
+var account_1 = __importDefault(require("./account"));
+var customer_1 = __importDefault(require("./customer"));
+document.getElementById('btn').addEventListener('click', function () {
+    var custname = document.getElementById('name').value;
+    var custid = document.getElementById('customer-id').value;
+    var custdiscount = document.getElementById('cust-discount').value;
+    var invoiceid = document.getElementById('invoice-id').value;
+    var amount = document.getElementById('amount').value;
+    var accountid = document.getElementById('account-id').value;
+    var balance = document.getElementById('balance').value;
+    var withdraw = document.getElementById('withdraw').value;
+    var deposit = document.getElementById('deposit').value;
+    var customer = new customer_1.default(custname, custid, custdiscount);
+    var invoice = new invoice_1.default(invoiceid, customer, amount);
+    var account = new account_1.default(accountid, customer, balance);
+    account.deposit(deposit);
+    account.withdraw(withdraw);
+    var result = account.getBalance();
+    var dr = document.getElementById('res');
+    var res = document.createElement('p');
+    res.innerText = String(result);
+    dr.appendChild(res);
+    document.getElementById('form').reset();
+});
